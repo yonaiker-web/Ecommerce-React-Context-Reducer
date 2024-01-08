@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 const Filters = ({ onChange }) => {
   const [minPrice, setMinPrice] = useState(0);
-  const [category, setCategory] = useState("all");
+  const minPriceFilterId = useId();
+  const categoryFilterId = useId();
 
   const handleChangeMinPrice = (e) => {
     setMinPrice(e.target.value);
@@ -14,7 +15,6 @@ const Filters = ({ onChange }) => {
   };
 
   const handleChangeCategory = (e) => {
-    setCategory(e.target.value);
     onChange((prevState) => ({
       ...prevState,
       category: e.target.value,
@@ -24,10 +24,10 @@ const Filters = ({ onChange }) => {
     <div className="">
       <div className="form-control w-full p-4">
         {/* el htmlFor nos ayudara como id para el input */}
-        <label htmlFor="price">Precio Mayor a {minPrice} $</label>
+        <label htmlFor={minPriceFilterId}>Precio Mayor a {minPrice} $</label>
         <input
           type="range"
-          id="price"
+          id={minPriceFilterId}
           min={0}
           max={1000}
           className="range"
@@ -38,14 +38,14 @@ const Filters = ({ onChange }) => {
       <div className="">
         <label className="form-control w-full p-4">
           <div className="label">
-            <label htmlFor="category" className="label-text">
+            <label htmlFor={categoryFilterId} className="label-text">
               Categorias
             </label>
           </div>
           <select
-            onChange={handleChangeCategory}
-            id="category"
+            id={categoryFilterId}
             className="select select-bordered"
+            onChange={handleChangeCategory}
           >
             <option disabled selected>
               Categoria
