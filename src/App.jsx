@@ -5,9 +5,8 @@ import { products as initialProducts } from "./mocks/products.json";
 import Header from "./components/Header";
 import Filters from "./components/Filters";
 
-function App() {
-  const [products, setProducts] = useState(initialProducts);
-
+//creamos un customHook que se ecargar solo de los filtrados
+function useFilters() {
   //creamos un estado de dos posiciones
   const [filters, setFilters] = useState({
     category: "all",
@@ -24,6 +23,17 @@ function App() {
     });
   };
 
+  return {
+    filterProducts,
+    setFilters,
+  };
+}
+
+function App() {
+  const [products] = useState(initialProducts);
+
+  //usamos la funcion que filtra y le pasamos
+  const { filterProducts, setFilters } = useFilters();
   //productos filtrados
   const filteredProducts = filterProducts(products);
 
